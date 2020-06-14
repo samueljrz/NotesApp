@@ -121,7 +121,7 @@ exports.uploadProfilePhoto = (req, res) => {
     let imageToBeUploaded = {};
 
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-        if(mimetype !== 'image/png' || mimetype !== 'image/jpeg') {
+        if(!(mimetype === 'image/png' || mimetype === 'image/jpeg)')) {
             return res.status(400).json({ error: 'Wrong file type submited' });
         }
         const imageExtension = filename.split('.')[filename.split('.').length - 1];
@@ -130,6 +130,63 @@ exports.uploadProfilePhoto = (req, res) => {
         imageToBeUploaded = { filePath, mimetype };
         file.pipe(fs.createWriteStream(filePath));
     });
+    
     deleteImage(imageFileName);
-    //...
+    
+    busboy.on('finish', () => {
+        admin
+            .storage()
+            .bucket()
+            .upload(imageToBeUploaded.filePath, {
+                resumable: false,
+                metadata: {
+                    contentType: imageToBeUploaded.mimetype
+                }
+            })
+            .then(() => {
+                const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media`;
+                return db.doc(`/users/${req.user.username}`).update({
+                    imageUrl
+                });
+            })
+            .then(() => {
+                return res.json({ message: 'Image uploaded successfully!' });
+            })
+            .catch((err) => {
+                console.error(err);
+                return res.status(500).json({ error: err.code });
+            });
+    });
+    busboy.end(req.rawBody);
+}
+
+exports.getUserDetail = (req, res) => {
+    let userData = {}
+
+    db
+        .doc(`/users/${req.user.username}`)
+        .get()
+        .then((doc) => {
+            if(doc.exists) {
+                userData.userCredentials = doc.data();
+                return res.json(userData);
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            return res.status(500).json({ error: err.code });
+        });
+}
+
+exports.updateUserDetails = (req, res) => {
+    let document = db.collection('users').doc(`${req.user.username}`);
+
+    document.update(req.body)
+    .then(() => {
+        res.json({ message: 'Updated successfully!' });
+    })
+    .catch((err) => {
+        console.error(err);
+        return res.status(500).json({ message: 'Cannot update the value!' });
+    });
 }

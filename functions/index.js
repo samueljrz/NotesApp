@@ -3,26 +3,32 @@ const app = require('express')();
 
 const { 
     getAllNotes,
+    getOneNote,
     postOneNote,
     deleteNote,
     editNote
 } = require('./APIs/notes');
 
+const auth = require('./utils/auth');
+
 const {
     loginUser,
     signUpUser,
-    uploadProfilePhoto
+    uploadProfilePhoto,
+    getUserDetail,
+    updateUserDetails
 } = require('./APIs/users');
 
-const auth = require('./utils/auth');
-
-app.get('/notes', getAllNotes);
-app.post('/note', postOneNote);
-app.delete('/note/:id', deleteNote);
-app.put('/note/:id', editNote);
+app.get('/notes', auth, getAllNotes);
+app.get('/note/:id', auth, getOneNote);
+app.post('/note', auth, postOneNote);
+app.delete('/note/:id', auth, deleteNote);
+app.put('/note/:id', auth, editNote);
 
 app.post('/login', loginUser);
 app.post('/signup', signUpUser);
-app.post('/user/image', auth, uploadProfilePhoto)
+app.post('/user/image', auth, uploadProfilePhoto);
+app.get('/user', auth, getUserDetail);
+app.put('/user', auth, updateUserDetails);
 
 exports.api = functions.https.onRequest(app);

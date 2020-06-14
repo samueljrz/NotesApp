@@ -3,6 +3,7 @@ const { db } = require('../utils/admin');
 exports.getAllNotes = (req, res) => {
     db
         .collection('notes')
+        .where('username', '==', req.user.username)
         .orderBy('createdAt', 'desc')
         .get()
         .then((data) => {
@@ -24,6 +25,25 @@ exports.getAllNotes = (req, res) => {
         });
 }
 
+exports.getOneNote = (req, res) => {
+    const { id } = req.params;
+    const document = db.doc(`/notes/${id}`);
+
+    document
+        .get()
+        .then((data) => {
+            if(!data.exists) {
+                return res.status(400).json({ error: 'Note not found!' });
+            }
+
+            return res.json(data.data());
+        })
+        .catch((err) => {
+            console.error(err);
+            return res.status(500).json({ error: err.code });
+        })
+}
+
 exports.postOneNote = (req, res) => {
     if(!req.body.content) {
         return res.status(400).json({ content: 'Must not be empty!' });
@@ -33,6 +53,7 @@ exports.postOneNote = (req, res) => {
     }
 
     const newNote = {
+        username: request.user.username,
         title: req.body.title,
         content: req.body.content,
         importance: req.body.importance,
@@ -65,8 +86,11 @@ exports.deleteNote = (req, res) => {
         .get()
         .then((data) => {
             if(!data.exists) {
-                return res.status(400).json({ error: 'Note not found!' })
+                return res.status(400).json({ error: 'Note not found!' });
             }
+            if(data.data().username !== req.user.username){
+                return response.status(403).json({ error:"UnAuthorized!" })
+           }
             
             return document.delete();
         })
