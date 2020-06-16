@@ -23,18 +23,16 @@ exports.validateSignUpData = (data) => {
     const schema = Joi.object().keys({
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
-        email: Joi.string().required().regex(emailRegEx),
+        email: Joi.string().required().regex(emailRegEx).error(() => {return errors.error = 'Is not a valid Email'}),
         phoneNumber: Joi.string().required(),
         country: Joi.string().required(),
-        password: Joi.string().required(),
+        password: Joi.string().required().min(6),
         confirmPassword: Joi.string().required().equal(data.password),
-        username: Joi.string().required()
+        username: Joi.string().required().token()
     })
 
-    //if(data.password !== data.confirmPassword) errors.confirmPassword = 'Passwords must be the same';
-
     Joi.validate(data, schema, (err) => {
-        if(err) errors.error = 'Fill all fields correctly!';
+        if(err) errors.error = err.message;
     });
     
     return {
