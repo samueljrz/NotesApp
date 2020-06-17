@@ -71,6 +71,7 @@ class Home extends Component {
 					phoneNumber: response.data.userCredentials.phoneNumber,
 					country: response.data.userCredentials.country,
 					username: response.data.userCredentials.username,
+					userId: response.data.userCredentials.userId,
 					uiLoading: false,
 					profilePicture: response.data.userCredentials.imageUrl
 				});

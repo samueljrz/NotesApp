@@ -53,7 +53,7 @@ exports.postOneNote = (req, res) => {
     }
 
     const newNote = {
-        username: request.user.username,
+        username: req.user.username,
         title: req.body.title,
         content: req.body.content,
         importance: req.body.importance,

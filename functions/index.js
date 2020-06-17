@@ -21,7 +21,7 @@ const {
 
 app.get('/notes', auth, getAllNotes);
 app.get('/note/:id', auth, getOneNote);
-app.post('/note', auth, postOneNote);
+app.post('/note', postOneNote);
 app.delete('/note/:id', auth, deleteNote);
 app.put('/note/:id', auth, editNote);
 
