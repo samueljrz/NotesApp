@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="NotesApp" title="notes" src=".github/notepg.png" width="250px" />
+  <img alt="NotesApp" title="notes" src=".github/notepg.png" />
 </h1>
 
 <br />
@@ -15,15 +15,15 @@
 
 <h1 align="center">
 	<h1>Login Page</h1>    
-	<img title="noteslogin" src=".github/loginpg.png" width="250px" />
+	<img title="noteslogin" src=".github/loginpg.png" />
 	<h1>SignUp Page</h1>	
-	<img title="notessignup" src=".github/signuppg.png" width="250px" />
+	<img title="notessignup" src=".github/signuppg.png" />
 	<h1>View Note Page</h1>	
-	<img title="notesviewnote" src=".github/viewnotepg.png" width="250px" />
+	<img title="notesviewnote" src=".github/viewnotepg.png" />
 	<h1>Edit Note Page</h1>	
-	<img title="notesedit" src=".github/editpg.png" width="250px" />
+	<img title="notesedit" src=".github/editpg.png" />
 	<h1>Account Page</h1>	
-	<img title="notesaccount" src=".github/accountpg.png" width="250px" />
+	<img title="notesaccount" src=".github/accountpg.png" />
 </h1>
 
 <br />
