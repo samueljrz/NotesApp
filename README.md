@@ -14,15 +14,15 @@
 ## 🌐 Web
 
 <h1 align="center">
-	<h1>Login Page</h1>    
+	<h2>Login Page</h2>    
 	<img title="noteslogin" src=".github/loginpg.png" />
-	<h1>SignUp Page</h1>	
+	<h2>SignUp Page</h2>	
 	<img title="notessignup" src=".github/signuppg.png" />
-	<h1>View Note Page</h1>	
+	<h2>View Note Page</h2>	
 	<img title="notesviewnote" src=".github/viewnotepg.png" />
-	<h1>Edit Note Page</h1>	
+	<h2>Edit Note Page</h2>	
 	<img title="notesedit" src=".github/editpg.png" />
-	<h1>Account Page</h1>	
+	<h2>Account Page</h2>	
 	<img title="notesaccount" src=".github/accountpg.png" />
 </h1>
 
