@@ -54,4 +54,4 @@ $ git clone https://github.com/samueljrz/NotesApp
 $ npm
 $ npm start
 ```
-by: Samuel Evangelista
+by: Samuel Evangelista de Aquino Júnior
